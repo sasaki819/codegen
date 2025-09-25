@@ -205,7 +205,7 @@
 |status        |done                                    |open / doing / review / done / cancel      |
 |updated_at    |2025-09-26 10:00                        |YYYY-MM-DD HH:mm                           |
 |branch        |feature/issue0005-prepare-directories   |ex)feature/issue0123-short-title           |
-|last commit id|                                        |ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|
+|last commit id|9ad8b99c0eb3d45a3df0cdbc3199c9b87523153f|ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|
 |related_issues|                                        |ex)issue0001, issue0456                    |
 
 <!-- META END -->

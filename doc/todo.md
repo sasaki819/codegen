@@ -137,3 +137,45 @@
 ## note
 
 - CSVアップロード機能は、`multer`のような追加ライブラリが必要なため、`csv.js`内では基本的な枠組みのみ実装し、未実装である旨をコンソールとレスポンスで返すようにしています。
+
+# [issue0004-APIパスへの/apiプレフィックス導入]
+
+## status
+
+<!-- META BEGIN -->
+|name          |value                                   |description                                |
+|--------------|----------------------------------------|-------------------------------------------|
+|id            |issue0004                               |issue+連番4桁                               |
+|title         |APIパスへの/apiプレフィックス導入           |タスクの簡潔な概要                            |
+|status        |open                                    |open / doing / review / done / cancel      |
+|updated_at    |YYYY-MM-DD HH:mm                        |YYYY-MM-DD HH:mm                           |
+|branch        |feature/issue0004-api-prefix            |ex)feature/issue0123-short-title           |
+|last commit id|                                        |ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|
+|related_issues|issue0003                               |ex)issue0001, issue0456                    |
+<!-- META END -->
+
+## task
+
+- プロジェクト全体のAPIエンドポイント設計をより安全でスケーラブルにするため、すべてのAPIパスの先頭に`/api`プレフィックスを導入する。
+- 以下のファイルを修正する。
+  - **1. `vite.config.ts`**:
+    - プロキシ設定を、個別パスの指定から`/api`への単一ルールに変更する。
+  - **2. `doc/description.md`**:
+    - `#APIエンドポイントについて` および `#API仕様` セクションに記載されているパスの例を、`/api`プレフィックス付きのものに更新する。（例: `/feature.id` -> `/api/feature.id`）
+  - **3. `doc/swagger/openapi.yaml`**:
+    - すべてのパス定義（`/employees`, `/products` 等）の先頭に`/api`を追加する。
+  - **4. `api/middlewares/csv.js`**:
+    - リクエストパスからリソース名を抽出するロジックを、新しいパス階層に合わせて修正する。（例: `req.path.split('/')[1]` -> `req.path.split('/')[2]`）
+- 今後の実装（フロントエンドのAPI呼び出し、コード生成ロジック）は、この`/api`プレフィックスを前提とすることを開発チームに周知する。
+
+## result
+
+- ここにタスクの実行結果を記載します。
+
+### modified file list
+
+- ここに更新したファイルの一覧記載します。
+
+## note
+
+- 特になし

@@ -316,8 +316,8 @@
 |--------------|----------------------------------------|-------------------------------------------|
 |id            |issue0007                               |issue+連番4桁                               |
 |title         |Employeesメタデータ作成                   |タスクの簡潔な概要                            |
-|status        |open                                    |open / doing / review / done / cancel      |
-|updated_at    |                                        |YYYY-MM-DD HH:mm                           |
+|status        |done                                    |open / doing / review / done / cancel      |
+|updated_at    |2025-01-27 16:00                          |YYYY-MM-DD HH:mm                           |
 |branch        |feature/issue0007-create-employees-meta |ex)feature/issue0123-short-title           |
 |last commit id|                                        |ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|
 |related_issues|                                        |ex)issue0001, issue0456                    |
@@ -331,11 +331,12 @@
 
 ## result
 
-- 
+- `doc/swagger/openapi.yaml` と `api/db.json` を参照して、Employeesに対するメタデータJSONを作成しました。
+- `metadata/dynamic/employees.json` としてファイルを配置しました。
 
 ### modified file list
 
-- 
+- A metadata/dynamic/employees.json
 
 ## note
 

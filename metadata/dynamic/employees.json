@@ -1,0 +1,156 @@
+{
+  "feature": {
+    "id": "employees",
+    "name": "従業員管理",
+    "menu": ["管理", "人事", "従業員管理"],
+    "type": "CRUD",
+    "hasDetailPage": true,
+    "allowCopyCreate": true,
+    "allowLikeSearch": true,
+    "hasHistory": false,
+    "csv": "IO",
+    "allowPrint": true,
+    "defaultMessages": [
+      {
+        "level": "info",
+        "page": "search",
+        "code": "I001",
+        "message": "従業員情報の検索・管理を行います。",
+        "allowDelete": false
+      }
+    ]
+  },
+  "resource": [
+    {
+      "id": "employee_id",
+      "name": "従業員ID",
+      "type": "Code",
+      "typeOptions": {
+        "regexp": "[A-Z]{3}[0-9]{3}",
+        "maxLen": 6,
+        "minLen": 6
+      },
+      "allowFilter": true,
+      "allowCreate": true,
+      "allowUpdate": false,
+      "allowDisplay": true
+    },
+    {
+      "id": "name",
+      "name": "氏名",
+      "type": "Text",
+      "typeOptions": {
+        "regexp": "[^\\n]*",
+        "maxLen": 50,
+        "minLen": 1,
+        "maxWidth": 20,
+        "overflow": "trim"
+      },
+      "allowFilter": true,
+      "allowCreate": true,
+      "allowUpdate": true,
+      "allowDisplay": true
+    },
+    {
+      "id": "department_id",
+      "name": "部署ID",
+      "type": "CodeDynamicList",
+      "typeOptions": {
+        "url": "/api/departments/reference"
+      },
+      "allowFilter": true,
+      "allowCreate": true,
+      "allowUpdate": true,
+      "allowDisplay": true
+    },
+    {
+      "id": "employment_type",
+      "name": "雇用形態",
+      "type": "CodeStaticList",
+      "typeOptions": {
+        "items": [
+          {
+            "name": "正社員",
+            "value": "full-time"
+          },
+          {
+            "name": "パートタイム",
+            "value": "part-time"
+          },
+          {
+            "name": "契約社員",
+            "value": "contract"
+          }
+        ]
+      },
+      "allowFilter": true,
+      "allowCreate": true,
+      "allowUpdate": true,
+      "allowDisplay": true
+    },
+    {
+      "id": "hire_date",
+      "name": "入社日",
+      "type": "Date",
+      "typeOptions": {},
+      "allowFilter": true,
+      "allowCreate": true,
+      "allowUpdate": true,
+      "allowDisplay": true
+    },
+    {
+      "id": "salary",
+      "name": "給与",
+      "type": "Integer",
+      "typeOptions": {
+        "max": 10000000,
+        "min": 0,
+        "comma": true,
+        "markAfter": "円"
+      },
+      "allowFilter": true,
+      "allowCreate": true,
+      "allowUpdate": true,
+      "allowDisplay": true
+    },
+    {
+      "id": "is_active",
+      "name": "アクティブ",
+      "type": "TwoState",
+      "typeOptions": {
+        "onName": "アクティブ",
+        "offName": "非アクティブ"
+      },
+      "allowFilter": true,
+      "allowCreate": true,
+      "allowUpdate": true,
+      "allowDisplay": true
+    },
+    {
+      "id": "created_at",
+      "name": "作成日時",
+      "type": "Text",
+      "typeOptions": {
+        "maxWidth": 20,
+        "overflow": "trim"
+      },
+      "allowFilter": false,
+      "allowCreate": false,
+      "allowUpdate": false,
+      "allowDisplay": true
+    },
+    {
+      "id": "updated_at",
+      "name": "更新日時",
+      "type": "Text",
+      "typeOptions": {
+        "maxWidth": 20,
+        "overflow": "trim"
+      },
+      "allowFilter": false,
+      "allowCreate": false,
+      "allowUpdate": false,
+      "allowDisplay": true
+    }
+  ]
+}

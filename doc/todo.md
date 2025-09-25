@@ -88,3 +88,52 @@
 ## note
 
 - 特になし
+
+# [issue0003-APIサーバー作成]
+
+## status
+
+<!-- META BEGIN -->
+|name          |value                                   |description                                |
+|--------------|----------------------------------------|-------------------------------------------|
+|id            |issue0003                               |issue+連番4桁                               |
+|title         |APIサーバー作成                           |タスクの簡潔な概要                            |
+|status        |done                                    |open / doing / review / done / cancel      |
+|updated_at    |2025-09-25 17:00                        |YYYY-MM-DD HH:mm                           |
+|branch        |feature/issue003-api-server             |ex)feature/issue0123-short-title           |
+|last commit id|                                        |ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|
+|related_issues|issue0001, issue0456                    |ex)issue0001, issue0456                    |
+<!-- META END -->
+
+## task
+
+- json-serverパッケージを使用してAPIのモックサーバーを作成する
+- APIのIFは./doc/swagger/openapi.yamlに従う
+- json-server用のdb.jsonは./api/db.jsonに格納する
+- ./api/db.jsonに定義するデータはデータのバリエーションを意識して架空のemployeesデータを180件程度、departmentsデータを25件程度、Productsデータを75件程度用意する
+- json-serverがcsvのダウロード／アップロードのAPIを提供できるよう、./api/middlewares/csv.jsを実装し、json-server起動時に--middlewaresに指定する
+- json-serverをviteの開発サーバー（vite run dev）と同時に起動／停止させるためconcurrentlyを導入する
+- package.jsonのscripts.devでconcurrentlyを使用してviteとjson-serverを同時に実行するよう設定する
+- json-serverのデフォルトポート3000は一般的すぎるので3012に変更する
+- concurrentlyの--kill-othersオプションを指定して、どちかのプロセスが停止したらもう一方も停止させる
+- vite(localhost:5173)へapiリクエストしたらjson-server(localhost:3012)へプロキシするようvite.config.tsにproxyを設定する
+
+## result
+
+- `json-server`と`concurrently`をインストールしました。
+- `api/db.json`にモックデータを生成しました。
+- `api/middlewares/csv.js`にCSVダウンロード用のミドルウェアを実装しました。
+- `package.json`の`dev`スクリプトを更新し、`concurrently`でViteとjson-serverを同時実行するようにしました。
+- `vite.config.ts`にAPIリクエストをプロキシする設定を追加しました。
+
+### modified file list
+
+- M package.json
+- M vite.config.ts
+- A api/db.json
+- A api/middlewares/csv.js
+- M doc/todo.md
+
+## note
+
+- CSVアップロード機能は、`multer`のような追加ライブラリが必要なため、`csv.js`内では基本的な枠組みのみ実装し、未実装である旨をコンソールとレスポンスで返すようにしています。

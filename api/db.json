@@ -1,0 +1,28 @@
+
+{
+  "employees": [
+    { "employee_id": "EMP001", "name": "山田 太郎", "department_id": "D01", "employment_type": "full-time", "hire_date": "2020-04-01", "salary": 400000, "is_active": true, "created_at": "2020-04-01T10:00:00Z", "updated_at": "2023-01-15T14:30:00Z" },
+    { "employee_id": "EMP002", "name": "佐藤 花子", "department_id": "D02", "employment_type": "full-time", "hire_date": "2021-04-01", "salary": 350000, "is_active": true, "created_at": "2021-04-01T10:00:00Z", "updated_at": "2023-05-20T11:00:00Z" },
+    { "employee_id": "EMP003", "name": "鈴木 一郎", "department_id": "D01", "employment_type": "part-time", "hire_date": "2022-08-15", "salary": 150000, "is_active": true, "created_at": "2022-08-15T09:00:00Z", "updated_at": "2022-11-10T18:00:00Z" },
+    { "employee_id": "EMP004", "name": "高橋 直子", "department_id": "D03", "employment_type": "contract", "hire_date": "2023-01-10", "salary": 280000, "is_active": true, "created_at": "2023-01-10T09:30:00Z", "updated_at": "2023-03-01T16:45:00Z" },
+    { "employee_id": "EMP005", "name": "田中 健太", "department_id": "D02", "employment_type": "full-time", "hire_date": "2019-07-01", "salary": 450000, "is_active": false, "created_at": "2019-07-01T10:00:00Z", "updated_at": "2022-12-31T23:59:59Z" }
+  ],
+  "departments": [
+    { "department_id": "D01", "name": "営業部", "manager_id": "EMP001", "budget": 100000000, "establishment_date": "2010-04-01" },
+    { "department_id": "D02", "name": "開発部", "manager_id": "EMP002", "budget": 80000000, "establishment_date": "2012-05-10" },
+    { "department_id": "D03", "name": "人事部", "manager_id": "EMP004", "budget": 50000000, "establishment_date": "2015-01-15" },
+    { "department_id": "D04", "name": "マーケティング部", "manager_id": null, "budget": 60000000, "establishment_date": "2018-09-01" }
+  ],
+  "products": [
+    { "product_id": "PROD-001", "name": "高性能ノートPC 14インチ", "description": "最新CPU搭載の軽量・薄型モデル。", "price": 230000, "stock_quantity": 150, "category_id": "CAT-PC", "is_available": true },
+    { "product_id": "PROD-002", "name": "ワイヤレス静音マウス", "description": "クリック音が静かな5ボタンワイヤレスマウス。", "price": 3500, "stock_quantity": 300, "category_id": "CAT-PERI", "is_available": true },
+    { "product_id": "PROD-003", "name": "4K対応 27インチモニター", "description": "高精細な映像表現が可能なIPSパネル搭載モニター。", "price": 45000, "stock_quantity": 80, "category_id": "CAT-DISP", "is_available": true },
+    { "product_id": "PROD-004", "name": "ドッキングステーション USB-C", "description": "ケーブル1本で全ての周辺機器に接続。", "price": 12000, "stock_quantity": 120, "category_id": "CAT-PERI", "is_available": false },
+    { "product_id": "PROD-005", "name": "プログラマブルキーボード", "description": "キー配列を自由にカスタマイズ可能。", "price": 18000, "stock_quantity": 50, "category_id": "CAT-PERI", "is_available": true }
+  ],
+  "product-categories": [
+    { "category_id": "CAT-PC", "name": "PC本体" },
+    { "category_id": "CAT-PERI", "name": "PC周辺機器" },
+    { "category_id": "CAT-DISP", "name": "ディスプレイ" }
+  ]
+}

@@ -1,198 +1,187 @@
-
 openapi: 3.0.3
 info:
-  title: PageGen API
-  description: API specification for the metadata-driven React screen generator.
+  title: Employee Management API
+  description: A sample API for managing employees, demonstrating various data types for PageGen.
   version: 1.0.0
-
 servers:
   - url: /
     description: Relative path to the API server
-
 tags:
-  - name: CRUD
-    description: Core CRUD operations for resources
+  - name: Employees
+    description: Core CRUD operations for the Employee resource
   - name: CSV
-    description: CSV import/export operations
-  - name: Reference
-    description: Operations for fetching reference data
+    description: CSV import/export operations for Employees
+  - name: Reference Data
+    description: Operations for fetching reference data like departments
 
 paths:
-  /{featureId}:
+  /employees:
     get:
       tags:
-        - CRUD
-      summary: Search and retrieve a list of resources
-      description: >
-        Retrieves a paginated list of resources based on filter criteria.
-        Primary keys for detail retrieval can also be passed as query parameters.
+        - Employees
+      summary: Search employees
+      description: Retrieves a paginated list of employees based on filter criteria.
       parameters:
-        - name: featureId
-          in: path
-          required: true
+        - name: name
+          in: query
           schema:
             type: string
-          description: The ID of the resource (e.g., "users", "products").
+          description: Filter by employee name (allows partial match).
+        - name: department_id
+          in: query
+          schema:
+            type: string
+          description: Filter by department ID.
         - name: page
           in: query
           schema:
             type: integer
             default: 1
-          description: Page number for pagination.
         - name: pageSize
           in: query
           schema:
             type: integer
             default: 25
-          description: Number of items per page.
-        - name: useLike
-          in: query
-          schema:
-            type: boolean
-            default: false
-          description: If true, performs a LIKE search.
-        - name: includeHistory
-          in: query
-          schema:
-            type: boolean
-            default: false
-          description: If true, includes historical records in the search.
       responses:
         '200':
-          description: A list of resources.
+          description: A list of employees.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchResponse'
+                $ref: '#/components/schemas/EmployeeSearchResponse'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-
     post:
       tags:
-        - CRUD
-      summary: Create a new resource
-      parameters:
-        - name: featureId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: The ID of the resource.
+        - Employees
+      summary: Create a new employee
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ResourceItem'
+              $ref: '#/components/schemas/Employee'
       responses:
         '201':
-          description: Resource created successfully.
+          description: Employee created successfully.
           headers:
             Location:
-              description: The path to the newly created resource.
+              description: The path to the newly created employee.
               schema:
                 type: string
+                example: /employees?employee_id=EMP001
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateResponse'
+                $ref: '#/components/schemas/EmployeeResponse'
         '400':
-          description: Bad Request
+          description: Invalid input
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-    put:
+  /employees/detail:
+    get:
       tags:
-        - CRUD
-      summary: Update an existing resource
-      description: Updates a resource identified by its primary key(s) in the query string.
+        - Employees
+      summary: Get employee details
+      description: Retrieves a single employee's details by their primary key.
       parameters:
-        - name: featureId
-          in: path
+        - name: employee_id
+          in: query
           required: true
           schema:
             type: string
-          description: The ID of the resource.
-        # Primary keys are passed as dynamic query parameters e.g. ?key1=val1&key2=val2
-        # OpenAPI does not support fully dynamic query parameters well.
-        # This is a conceptual representation.
+          description: The primary key of the employee.
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeResponse'
+        '404':
+          description: Employee not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /employees/update:
+    put:
+      tags:
+        - Employees
+      summary: Update an existing employee
+      parameters:
+        - name: employee_id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The primary key of the employee to update.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ResourceItem'
+              $ref: '#/components/schemas/Employee'
       responses:
         '200':
-          description: Resource updated successfully.
+          description: Employee updated successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UpdateResponse'
+                $ref: '#/components/schemas/EmployeeResponse'
         '400':
-          description: Bad Request
+          description: Invalid input
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '404':
-          description: Resource Not Found
+          description: Employee not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /employees/delete:
     delete:
       tags:
-        - CRUD
-      summary: Delete a resource
-      description: Deletes a resource identified by its primary key(s) in the query string.
+        - Employees
+      summary: Delete an employee
+      description: Deletes an employee identified by their primary key.
       parameters:
-        - name: featureId
-          in: path
+        - name: employee_id
+          in: query
           required: true
           schema:
             type: string
-          description: The ID of the resource.
-        # Primary keys are passed as dynamic query parameters e.g. ?key1=val1&key2=val2
+          description: The primary key of the employee to delete.
       responses:
         '200':
-          description: Resource deleted successfully.
+          description: Employee deleted successfully.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeleteResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         '404':
-          description: Resource Not Found
+          description: Employee not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /{featureId}/download:
+  /employees/download:
     post:
       tags:
         - CSV
-      summary: Download resources as a CSV file
-      parameters:
-        - name: featureId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: The ID of the resource.
+      summary: Download employee data as a CSV file
       requestBody:
         content:
           application/json:
@@ -200,7 +189,7 @@ paths:
               $ref: '#/components/schemas/CsvDownloadRequest'
       responses:
         '200':
-          description: A CSV file stream.
+          description: A CSV file stream of employees.
           content:
             text/csv:
               schema:
@@ -209,7 +198,7 @@ paths:
             Content-Disposition:
               schema:
                 type: string
-                example: 'attachment; filename="resource_20250925_123000.csv"'
+                example: 'attachment; filename="employees_20250925.csv"'
         '400':
           description: Bad Request
           content:
@@ -217,18 +206,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /{featureId}/upload:
+  /employees/upload:
     post:
       tags:
         - CSV
-      summary: Upload a CSV file to bulk-register resources
-      parameters:
-        - name: featureId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: The ID of the resource.
+      summary: Upload a CSV file to bulk-create or update employees
       requestBody:
         required: true
         content:
@@ -239,9 +221,6 @@ paths:
                 file:
                   type: string
                   format: binary
-                options:
-                  type: string
-                  description: JSON string with upload options.
       responses:
         '200':
           description: The result of the bulk upload process.
@@ -255,97 +234,128 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '413':
-          description: Payload Too Large
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
 
-  /reference/codelist/{codeId}:
+  /departments:
     get:
       tags:
-        - Reference
-      summary: Get a list of code values for dropdowns
-      parameters:
-        - name: codeId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: The ID of the code list to retrieve.
+        - Reference Data
+      summary: Get a list of departments
+      description: Retrieves a list of all departments for use in dropdowns.
       responses:
         '200':
-          description: A list of name-value pairs.
+          description: A list of departments.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CodeListItem'
-        '404':
-          description: Code list not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                  $ref: '#/components/schemas/Department'
 
 components:
   schemas:
-    ResourceItem:
+    Employee:
       type: object
-      description: A generic object representing a single resource record. The properties are dynamic based on the resource definition.
-      additionalProperties: true
-      example:
-        id: 123
-        name: "Sample Item"
-        value: 100
+      description: Represents a single employee.
+      properties:
+        employee_id:
+          type: string
+          description: "Unique identifier for the employee (e.g., 'EMP001'). Primary Key."
+          example: "EMP102"
+        name:
+          type: string
+          description: "Employee's full name."
+          example: "山田 太郎"
+        department_id:
+          type: string
+          description: "ID of the department the employee belongs to. Foreign key to Departments."
+          example: "D02"
+        employment_type:
+          type: string
+          description: "Employment status."
+          enum: [full-time, part-time, contract]
+          example: "full-time"
+        hire_date:
+          type: string
+          format: date
+          description: "The date the employee was hired."
+          example: "2023-04-01"
+        salary:
+          type: integer
+          format: int64
+          description: "Employee's monthly salary in JPY."
+          example: 350000
+        is_active:
+          type: boolean
+          description: "Logical delete flag. false means deleted."
+          example: true
+        created_at:
+          type: string
+          format: date-time
+          description: "Timestamp of creation."
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          description: "Timestamp of last update."
+          readOnly: true
+      required:
+        - employee_id
+        - name
+        - department_id
+        - hire_date
 
-    SearchResponse:
+    Department:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "Unique identifier for the department."
+          example: "D01"
+        name:
+          type: string
+          description: "Name of the department."
+          example: "営業部"
+
+    EmployeeResponse:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/Employee'
+
+    EmployeeSearchResponse:
       type: object
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/ResourceItem'
+            $ref: '#/components/schemas/Employee'
         total:
           type: integer
         page:
           type: integer
         pageSize:
           type: integer
-        sort:
-          type: object
-          properties:
-            orderBy:
-              type: string
-            order:
-              type: string
-              enum: [asc, desc]
-
-    CreateResponse:
-      type: object
-      properties:
-        id:
-          type: object
-          description: The primary key(s) of the created resource.
-          additionalProperties: true
-        item:
-          $ref: '#/components/schemas/ResourceItem'
-
-    UpdateResponse:
-      type: object
-      properties:
-        item:
-          $ref: '#/components/schemas/ResourceItem'
 
     DeleteResponse:
       type: object
       properties:
         deleted:
           type: boolean
+          example: true
         affected:
           type: integer
+          example: 1
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
 
     CsvDownloadRequest:
       type: object
@@ -353,8 +363,6 @@ components:
         filters:
           type: object
           additionalProperties: true
-        includeHistory:
-          type: boolean
         columns:
           type: array
           items:
@@ -364,11 +372,6 @@ components:
         order:
           type: string
           enum: [asc, desc]
-        format:
-          type: object
-          properties: {} # See description.md for details
-        limit:
-          type: integer
 
     CsvUploadResponse:
       type: object
@@ -396,27 +399,3 @@ components:
                 type: string
               message:
                 type: string
-
-    CodeListItem:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The display name for the option.
-        value:
-          type: string # Can be string or number depending on the context
-          description: The actual value to be submitted.
-        text:
-          type: string
-          description: Additional text associated with the code (for CodeNameList).
-
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: object
-          additionalProperties: true

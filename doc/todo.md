@@ -51,9 +51,9 @@
 |name          |value                                   |description                                |
 |--------------|----------------------------------------|-------------------------------------------|
 |id            |issue0002                               |issue+連番4桁                               |
-|title         |OpenAPI仕様書作成                         |APIのIFをOpenAPIのYAML形式で作成            |
-|status        |open                                    |open / doing / review / done / cancel      |
-|updated_at    |YYYY-MM-DD HH:mm                        |YYYY-MM-DD HH:mm                           |
+|title         |OpenAPI仕様書作成                         |タスクの簡潔な概要                            |
+|status        |done                                    |open / doing / review / done / cancel      |
+|updated_at    |2025-09-25 14:30                        |YYYY-MM-DD HH:mm                           |
 |branch        |feature/issue0002-create-openapi-yaml   |ex)feature/issue0002-create-openapi-yaml   |
 |last commit id|                                        |ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|
 |related_issues|                                        |ex)issue0001, issue0456                    |
@@ -77,11 +77,13 @@
 
 ## result
 
-- タスク実行結果をここに記載します。
+- `description.md` のAPI仕様に基づき、OpenAPI仕様書(YAML)を作成しました。
+- `api/swagger/openapi.yaml` としてファイルを配置しました。
 
 ### modified file list
 
-- 変更されたファイルリストをここに記載します。
+- A api/swagger/openapi.yaml
+- M doc/todo.md
 
 ## note
 

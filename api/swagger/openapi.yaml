@@ -1,0 +1,422 @@
+
+openapi: 3.0.3
+info:
+  title: PageGen API
+  description: API specification for the metadata-driven React screen generator.
+  version: 1.0.0
+
+servers:
+  - url: /
+    description: Relative path to the API server
+
+tags:
+  - name: CRUD
+    description: Core CRUD operations for resources
+  - name: CSV
+    description: CSV import/export operations
+  - name: Reference
+    description: Operations for fetching reference data
+
+paths:
+  /{featureId}:
+    get:
+      tags:
+        - CRUD
+      summary: Search and retrieve a list of resources
+      description: >
+        Retrieves a paginated list of resources based on filter criteria.
+        Primary keys for detail retrieval can also be passed as query parameters.
+      parameters:
+        - name: featureId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the resource (e.g., "users", "products").
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+          description: Page number for pagination.
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            default: 25
+          description: Number of items per page.
+        - name: useLike
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: If true, performs a LIKE search.
+        - name: includeHistory
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: If true, includes historical records in the search.
+      responses:
+        '200':
+          description: A list of resources.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags:
+        - CRUD
+      summary: Create a new resource
+      parameters:
+        - name: featureId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the resource.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceItem'
+      responses:
+        '201':
+          description: Resource created successfully.
+          headers:
+            Location:
+              description: The path to the newly created resource.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags:
+        - CRUD
+      summary: Update an existing resource
+      description: Updates a resource identified by its primary key(s) in the query string.
+      parameters:
+        - name: featureId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the resource.
+        # Primary keys are passed as dynamic query parameters e.g. ?key1=val1&key2=val2
+        # OpenAPI does not support fully dynamic query parameters well.
+        # This is a conceptual representation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceItem'
+      responses:
+        '200':
+          description: Resource updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags:
+        - CRUD
+      summary: Delete a resource
+      description: Deletes a resource identified by its primary key(s) in the query string.
+      parameters:
+        - name: featureId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the resource.
+        # Primary keys are passed as dynamic query parameters e.g. ?key1=val1&key2=val2
+      responses:
+        '200':
+          description: Resource deleted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /{featureId}/download:
+    post:
+      tags:
+        - CSV
+      summary: Download resources as a CSV file
+      parameters:
+        - name: featureId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the resource.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CsvDownloadRequest'
+      responses:
+        '200':
+          description: A CSV file stream.
+          content:
+            text/csv:
+              schema:
+                type: string
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+                example: 'attachment; filename="resource_20250925_123000.csv"'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /{featureId}/upload:
+    post:
+      tags:
+        - CSV
+      summary: Upload a CSV file to bulk-register resources
+      parameters:
+        - name: featureId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the resource.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                options:
+                  type: string
+                  description: JSON string with upload options.
+      responses:
+        '200':
+          description: The result of the bulk upload process.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CsvUploadResponse'
+        '400':
+          description: Bad Request or schema mismatch.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /reference/codelist/{codeId}:
+    get:
+      tags:
+        - Reference
+      summary: Get a list of code values for dropdowns
+      parameters:
+        - name: codeId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the code list to retrieve.
+      responses:
+        '200':
+          description: A list of name-value pairs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CodeListItem'
+        '404':
+          description: Code list not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    ResourceItem:
+      type: object
+      description: A generic object representing a single resource record. The properties are dynamic based on the resource definition.
+      additionalProperties: true
+      example:
+        id: 123
+        name: "Sample Item"
+        value: 100
+
+    SearchResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceItem'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        sort:
+          type: object
+          properties:
+            orderBy:
+              type: string
+            order:
+              type: string
+              enum: [asc, desc]
+
+    CreateResponse:
+      type: object
+      properties:
+        id:
+          type: object
+          description: The primary key(s) of the created resource.
+          additionalProperties: true
+        item:
+          $ref: '#/components/schemas/ResourceItem'
+
+    UpdateResponse:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/ResourceItem'
+
+    DeleteResponse:
+      type: object
+      properties:
+        deleted:
+          type: boolean
+        affected:
+          type: integer
+
+    CsvDownloadRequest:
+      type: object
+      properties:
+        filters:
+          type: object
+          additionalProperties: true
+        includeHistory:
+          type: boolean
+        columns:
+          type: array
+          items:
+            type: string
+        orderBy:
+          type: string
+        order:
+          type: string
+          enum: [asc, desc]
+        format:
+          type: object
+          properties: {} # See description.md for details
+        limit:
+          type: integer
+
+    CsvUploadResponse:
+      type: object
+      properties:
+        total:
+          type: integer
+        processed:
+          type: integer
+        inserted:
+          type: integer
+        updated:
+          type: integer
+        skipped:
+          type: integer
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              row:
+                type: integer
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+
+    CodeListItem:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The display name for the option.
+        value:
+          type: string # Can be string or number depending on the context
+          description: The actual value to be submitted.
+        text:
+          type: string
+          description: Additional text associated with the code (for CodeNameList).
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true

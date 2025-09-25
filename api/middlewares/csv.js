@@ -27,7 +27,7 @@ function toCsv(data) {
 module.exports = (req, res, next) => {
   // --- CSV Download ---
   if (req.path.endsWith('/download') && req.method === 'POST') {
-    const resource = req.path.split('/')[1]; // e.g., "employees"
+    const resource = req.path.split('/')[2]; // e.g., "employees" from "/api/employees/download"
 
     fs.readFile(dbFilePath, 'utf8', (err, data) => {
       if (err) {

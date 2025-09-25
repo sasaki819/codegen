@@ -146,9 +146,9 @@
 |name          |value                                   |description                                |
 |--------------|----------------------------------------|-------------------------------------------|
 |id            |issue0004                               |issue+連番4桁                               |
-|title         |APIパスへの/apiプレフィックス導入           |タスクの簡潔な概要                            |
-|status        |open                                    |open / doing / review / done / cancel      |
-|updated_at    |YYYY-MM-DD HH:mm                        |YYYY-MM-DD HH:mm                           |
+|title         |APIパスへの/apiプレフィックス導入         |APIエンドポイントのベースパスを/apiに統一する     |
+|status        |done                                    |open / doing / review / done / cancel      |
+|updated_at    |2025-09-25 18:00                        |YYYY-MM-DD HH:mm                           |
 |branch        |feature/issue0004-api-prefix            |ex)feature/issue0123-short-title           |
 |last commit id|                                        |ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|
 |related_issues|issue0003                               |ex)issue0001, issue0456                    |
@@ -170,11 +170,15 @@
 
 ## result
 
-- ここにタスクの実行結果を記載します。
+- タスク定義に基づき、関連ファイルすべてに対してAPIパスの先頭に`/api`プレフィックスを付与する修正を実施しました。
 
 ### modified file list
 
-- ここに更新したファイルの一覧記載します。
+- M vite.config.ts
+- M doc/description.md
+- M doc/swagger/openapi.yaml
+- M api/middlewares/csv.js
+- M doc/todo.md
 
 ## note
 

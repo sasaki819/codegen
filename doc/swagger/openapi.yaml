@@ -1,3 +1,4 @@
+
 openapi: 3.0.3
 info:
   title: PageGen Sample API
@@ -20,7 +21,7 @@ tags:
 
 paths:
   # --- Employees ---
-  /employees:
+  /api/employees:
     get:
       tags: [Employees]
       summary: Search employees
@@ -76,7 +77,7 @@ paths:
               description: The path to the newly created employee.
               schema:
                 type: string
-                example: /employees?employee_id=EMP001
+                example: /api/employees?employee_id=EMP001
           content:
             application/json:
               schema:
@@ -88,7 +89,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /employees/detail:
+  /api/employees/detail:
     get:
       tags: [Employees]
       summary: Get employee details
@@ -114,7 +115,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /employees/update:
+  /api/employees/update:
     put:
       tags: [Employees]
       summary: Update an existing employee
@@ -151,7 +152,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /employees/delete:
+  /api/employees/delete:
     delete:
       tags: [Employees]
       summary: Delete an employee
@@ -177,7 +178,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /employees/download:
+  /api/employees/download:
     post:
       tags: [Employees, CSV]
       summary: Download employee data as a CSV file
@@ -205,7 +206,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /employees/upload:
+  /api/employees/upload:
     post:
       tags: [Employees, CSV]
       summary: Upload a CSV file for employees
@@ -234,7 +235,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 
   # --- Departments ---
-  /departments:
+  /api/departments:
     get:
       tags: [Departments]
       summary: Search departments
@@ -271,7 +272,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Department'
 
-  /departments/update:
+  /api/departments/update:
     put:
       tags: [Departments]
       summary: Update a department
@@ -295,7 +296,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Department'
 
-  /departments/delete:
+  /api/departments/delete:
     delete:
       tags: [Departments]
       summary: Delete a department
@@ -314,7 +315,7 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
 
   # --- Products ---
-  /products:
+  /api/products:
     get:
       tags: [Products]
       summary: Search products
@@ -355,7 +356,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Product'
 
-  /products/update:
+  /api/products/update:
     put:
       tags: [Products]
       summary: Update a product
@@ -379,7 +380,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Product'
 
-  /products/delete:
+  /api/products/delete:
     delete:
       tags: [Products]
       summary: Delete a product
@@ -398,7 +399,7 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
 
   # --- Reference Data ---
-  /product-categories:
+  /api/product-categories:
     get:
       tags: [Reference Data]
       summary: Get a list of product categories

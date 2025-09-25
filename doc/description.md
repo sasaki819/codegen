@@ -252,12 +252,12 @@ Reactの画面をメタデータから自動生成するプロジェクトのPoC
 * http://<mydomain>/feature.id/delete?<主キー情報をクエリストリングで指定> で削除画面を表示
 
 # APIエンドポイントについて
-* 検索は「GET https://<mydomain>/feature.id?<検索条件をクエリストリングで指定>」
-* 登録は「POST https://<mydomain>/feature.id」
-* 更新は「PUT https://<mydomain>/feature.id?<主キー情報をクエリストリングで指定>」
-* 削除は「DELETE https://<mydomain>/feature.id?<主キー情報をクエリストリングで指定>」
-* CSVダウンロードは「POST https://<mydomain>/feature.id/download」
-* CSV一括登録は「POST https://<mydomain>/feature.id/upload」
+* 検索は「GET https://<mydomain>/api/feature.id?<検索条件をクエリストリングで指定>」
+* 登録は「POST https://<mydomain>/api/feature.id」
+* 更新は「PUT https://<mydomain>/api/feature.id?<主キー情報をクエリストリングで指定>」
+* 削除は「DELETE https://<mydomain>/api/feature.id?<主キー情報をクエリストリングで指定>」
+* CSVダウンロードは「POST https://<mydomain>/api/feature.id/download」
+* CSV一括登録は「POST https://<mydomain>/api/feature.id/upload」
 * 開発環境ではhttpでアクセスする
 * 実装コード上は「http(s)://<mydomain>」は記述せず、アクセスしたドメインに対してパス指定でアクセスする
 
@@ -271,9 +271,9 @@ Reactの画面をメタデータから自動生成するプロジェクトのPoC
 
 ### 主キー指定の方針
 * 本システムは複合ナチュラルキーを前提とするため、明細取得/更新/削除の主キー指定はクエリストリングで行う
-  * 例: `GET /<feature.id>?k1=...&k2=...`
-  * `PUT /<feature.id>?k1=...&k2=...`
-  * `DELETE /<feature.id>?k1=...&k2=...`
+  * 例: `GET /api/<feature.id>?k1=...&k2=...`
+  * `PUT /api/<feature.id>?k1=...&k2=...`
+  * `DELETE /api/<feature.id>?k1=...&k2=...`
 * `Location` ヘッダの主キー表現も同様にクエリストリングで返す
 
 ## 正常時レスポンス標準形式
@@ -306,7 +306,7 @@ Reactの画面をメタデータから自動生成するプロジェクトのPoC
 ### 登録（Create）
 * ステータス: `201 Created`
 * ヘッダ:
-  * `Location: /<feature.id>?<主キーのクエリストリング>`（主キーが複合の場合は全キーを含める）
+  * `Location: /api/<feature.id>?<主キーのクエリストリング>`（主キーが複合の場合は全キーを含める）
 * 形式:
 ```json
 {
@@ -342,7 +342,7 @@ Reactの画面をメタデータから自動生成するプロジェクトのPoC
 ```
 
 ## CSVダウンロード（エクスポート）
-* エンドポイント: `POST /<feature.id>/download`
+* エンドポイント: `POST /api/<feature.id>/download`
 * リクエスト（JSON）
     * `filters`: 検索条件
     * `includeHistory`: 履歴含める（boolean, 既定 false）
@@ -362,7 +362,7 @@ Reactの画面をメタデータから自動生成するプロジェクトのPoC
     * `500 INTERNAL_SERVER_ERROR`
 
 ## CSV一括登録（インポート）
-* エンドポイント: `POST /<feature.id>/upload`
+* エンドポイント: `POST /api/<feature.id>/upload`
 * リクエスト: `multipart/form-data`
     * フィールド:
         * `file`: CSVファイル（`text/csv` または `application/vnd.ms-excel` 許容）

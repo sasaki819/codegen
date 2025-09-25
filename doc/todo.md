@@ -3,6 +3,7 @@
 ## status
 
 <!-- META BEGIN -->
+
 |name          |value                                   |description                                |
 |--------------|----------------------------------------|-------------------------------------------|
 |id            |issue0123                               |issue+連番4桁                               |
@@ -12,6 +13,7 @@
 |branch        |feature/issue0123-short-title           |ex)feature/issue0123-short-title           |
 |last commit id|ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|
 |related_issues|issue0001, issue0456                    |ex)issue0001, issue0456                    |
+
 <!-- META END -->
 
 ## task
@@ -48,6 +50,7 @@
 ## status
 
 <!-- META BEGIN -->
+
 |name          |value                                   |description                                |
 |--------------|----------------------------------------|-------------------------------------------|
 |id            |issue0002                               |issue+連番4桁                               |
@@ -57,6 +60,7 @@
 |branch        |feature/issue0002-create-openapi-yaml   |ex)feature/issue0002-create-openapi-yaml   |
 |last commit id|                                        |ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|
 |related_issues|                                        |ex)issue0001, issue0456                    |
+
 <!-- META END -->
 
 ## task
@@ -94,6 +98,7 @@
 ## status
 
 <!-- META BEGIN -->
+
 |name          |value                                   |description                                |
 |--------------|----------------------------------------|-------------------------------------------|
 |id            |issue0003                               |issue+連番4桁                               |
@@ -103,6 +108,7 @@
 |branch        |feature/issue003-api-server             |ex)feature/issue0123-short-title           |
 |last commit id|                                        |ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|
 |related_issues|issue0001, issue0456                    |ex)issue0001, issue0456                    |
+
 <!-- META END -->
 
 ## task
@@ -143,15 +149,17 @@
 ## status
 
 <!-- META BEGIN -->
-|name          |value                                   |description                                |
-|--------------|----------------------------------------|-------------------------------------------|
-|id            |issue0004                               |issue+連番4桁                               |
-|title         |APIパスへの/apiプレフィックス導入         |APIエンドポイントのベースパスを/apiに統一する     |
-|status        |done                                    |open / doing / review / done / cancel      |
-|updated_at    |2025-09-25 18:00                        |YYYY-MM-DD HH:mm                           |
-|branch        |feature/issue0004-api-prefix            |ex)feature/issue0123-short-title           |
-|last commit id|                                        |ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|
-|related_issues|issue0003                               |ex)issue0001, issue0456                    |
+
+|      name      |            value             |                 description                 |
+| ------------ | -------------------------- | ----------------------------------------- |
+|       id       |          issue0004           |                 issue+連番4桁                  |
+|     title      |     APIパスへの/apiプレフィックス導入     |         APIエンドポイントのベースパスを/apiに統一する          |
+|     status     |             done             |    open / doing / review / done / cancel    |
+|   updated_at   |       2025-09-25 18:00       |              YYYY-MM-DD HH:mm               |
+|     branch     | feature/issue0004-api-prefix |      ex)feature/issue0123-short-title       |
+| last commit id |                              | ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da |
+| related_issues |          issue0003           |           ex)issue0001, issue0456           |
+
 <!-- META END -->
 
 ## task
@@ -179,6 +187,114 @@
 - M doc/swagger/openapi.yaml
 - M api/middlewares/csv.js
 - M doc/todo.md
+
+## note
+
+- 特になし
+
+# [issue0005-フォルダ構成準備]
+
+## status
+
+<!-- META BEGIN -->
+
+|name          |value                                   |description                                |
+|--------------|----------------------------------------|-------------------------------------------|
+|id            |issue0005                               |issue+連番4桁                               |
+|title         |フォルダ構成準備                          |タスクの簡潔な概要                            |
+|status        |open                                    |open / doing / review / done / cancel      |
+|updated_at    |                                        |YYYY-MM-DD HH:mm                           |
+|branch        |feature/issue0005-prepare-directories   |ex)feature/issue0123-short-title           |
+|last commit id|                                        |ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|
+|related_issues|                                        |ex)issue0001, issue0456                    |
+
+<!-- META END -->
+
+## task
+
+- `plan.md` の Step.1 に基づき、`doc/description.md` に記載されたプロジェクトのフォルダ構成に従ったディレクトリツリーを準備する。
+
+## result
+
+- 
+
+### modified file list
+
+- 
+
+## note
+
+- 特になし
+
+# [issue0006-共通コンポーネント実装]
+
+## status
+
+<!-- META BEGIN -->
+
+|name          |value                                       |description                                |
+|--------------|--------------------------------------------|-------------------------------------------|
+|id            |issue0006                                   |issue+連番4桁                               |
+|title         |共通コンポーネント実装                        |タスクの簡潔な概要                            |
+|status        |open                                        |open / doing / review / done / cancel      |
+|updated_at    |                                            |YYYY-MM-DD HH:mm                           |
+|branch        |feature/issue0006-implement-common-components|ex)feature/issue0123-short-title           |
+|last commit id|                                            |ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|
+|related_issues|                                            |ex)issue0001, issue0456                    |
+
+<!-- META END -->
+
+## task
+
+- `plan.md` の Step.2 に基づき、`doc/description.md` の仕様に従って共通コンポーネントを `src/common/components` 配下に実装する。
+- 対象コンポーネント:
+  - ヘッダー
+  - メッセージエリア
+  - ボタン
+  - 各種フォーム入力部品
+
+## result
+
+- 
+
+### modified file list
+
+- 
+
+## note
+
+- 特になし
+
+# [issue0007-Employeesメタデータ作成]
+
+## status
+
+<!-- META BEGIN -->
+
+|name          |value                                   |description                                |
+|--------------|----------------------------------------|-------------------------------------------|
+|id            |issue0007                               |issue+連番4桁                               |
+|title         |Employeesメタデータ作成                   |タスクの簡潔な概要                            |
+|status        |open                                    |open / doing / review / done / cancel      |
+|updated_at    |                                        |YYYY-MM-DD HH:mm                           |
+|branch        |feature/issue0007-create-employees-meta |ex)feature/issue0123-short-title           |
+|last commit id|                                        |ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|
+|related_issues|                                        |ex)issue0001, issue0456                    |
+
+<!-- META END -->
+
+## task
+
+- `plan.md` の Step.3 に基づき、`doc/swagger/openapi.yaml` を参照して、サンプルとしてEmployeesに対するメタデータJSONを作成する。
+- 作成したファイルは `metadata/dynamic/employees.json` として配置する。
+
+## result
+
+- 
+
+### modified file list
+
+- 
 
 ## note
 

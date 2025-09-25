@@ -257,8 +257,8 @@
 |--------------|--------------------------------------------|-------------------------------------------|
 |id            |issue0006                                   |issue+連番4桁                               |
 |title         |共通コンポーネント実装                        |タスクの簡潔な概要                            |
-|status        |open                                        |open / doing / review / done / cancel      |
-|updated_at    |                                            |YYYY-MM-DD HH:mm                           |
+|status        |done                                       |open / doing / review / done / cancel      |
+|updated_at    |2025-01-27 15:30                          |YYYY-MM-DD HH:mm                           |
 |branch        |feature/issue0006-implement-common-components|ex)feature/issue0123-short-title           |
 |last commit id|                                            |ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|
 |related_issues|                                            |ex)issue0001, issue0456                    |
@@ -276,11 +276,31 @@
 
 ## result
 
-- 
+- `doc/description.md` の仕様に基づき、共通コンポーネントを `src/common/components` 配下に実装しました。
+- ヘッダー、メッセージエリア、ボタン、各種フォーム入力部品（テキスト、数値、日付、プルダウン、チェックボックス、ラジオボタン）、TOPへボタンを実装しました。
 
 ### modified file list
 
-- 
+- M src/common/components/Header/Header.tsx
+- A src/common/components/MessageArea/MessageArea.tsx
+- A src/common/components/MessageArea/index.ts
+- A src/common/components/Button/Button.tsx
+- A src/common/components/Button/index.ts
+- A src/common/components/Input/Input.tsx
+- A src/common/components/Input/index.ts
+- A src/common/components/NumberInput/NumberInput.tsx
+- A src/common/components/NumberInput/index.ts
+- A src/common/components/DateInput/DateInput.tsx
+- A src/common/components/DateInput/index.ts
+- A src/common/components/Select/Select.tsx
+- A src/common/components/Select/index.ts
+- A src/common/components/CheckboxInput/CheckboxInput.tsx
+- A src/common/components/CheckboxInput/index.ts
+- A src/common/components/RadioGroup/RadioGroup.tsx
+- A src/common/components/RadioGroup/index.ts
+- A src/common/components/TopButton/TopButton.tsx
+- A src/common/components/TopButton/index.ts
+- A src/common/components/index.ts
 
 ## note
 

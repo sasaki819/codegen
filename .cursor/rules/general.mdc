@@ -1,0 +1,9 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+- プロジェクト開始時に "./doc/description.md" を読んでください
+- 開発作業は "./doc/todo.md" で管理する
+- QAには簡潔に回答する
+- QA回答に無関係な分野の例を用いない（例えるなら一流シェフが作る料理のような物です。など）

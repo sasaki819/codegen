@@ -202,8 +202,8 @@
 |--------------|----------------------------------------|-------------------------------------------|
 |id            |issue0005                               |issue+連番4桁                               |
 |title         |フォルダ構成準備                          |タスクの簡潔な概要                            |
-|status        |open                                    |open / doing / review / done / cancel      |
-|updated_at    |                                        |YYYY-MM-DD HH:mm                           |
+|status        |done                                    |open / doing / review / done / cancel      |
+|updated_at    |2025-09-26 10:00                        |YYYY-MM-DD HH:mm                           |
 |branch        |feature/issue0005-prepare-directories   |ex)feature/issue0123-short-title           |
 |last commit id|                                        |ex)ceefcbaa024ae083a8ed92fb66d6ef0ec568e0da|
 |related_issues|                                        |ex)issue0001, issue0456                    |
@@ -216,11 +216,32 @@
 
 ## result
 
-- 
+- `doc/description.md` に記載されたフォルダ構成に基づき、ディレクトリと`.gitkeep`ファイルを作成しました。
 
 ### modified file list
 
-- 
+- A metadata/dynamic/.gitkeep
+- A metadata/static/.gitkeep
+- A template/pages/
+- A scripts/dist/.gitkeep
+- A src/dynamic/pages/.gitkeep
+- A src/dynamic/components/.gitkeep
+- A src/dynamic/hooks/.gitkeep
+- A src/dynamic/types/.gitkeep
+- A src/dynamic/services/.gitkeep
+- A src/static/pages/.gitkeep
+- A src/static/components/.gitkeep
+- A src/static/hooks/.gitkeep
+- A src/static/types/.gitkeep
+- A src/static/services/.gitkeep
+- A src/common/pages/
+- A src/common/routes/
+- A src/common/components/
+- A src/common/hooks/
+- A src/common/types/
+- A src/common/services/
+- A src/common/logic/
+- M doc/todo.md
 
 ## note
 

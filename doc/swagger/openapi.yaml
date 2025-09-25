@@ -1,24 +1,28 @@
 openapi: 3.0.3
 info:
-  title: Employee Management API
-  description: A sample API for managing employees, demonstrating various data types for PageGen.
-  version: 1.0.0
+  title: PageGen Sample API
+  description: A sample API for managing Employees, Departments, and Products.
+  version: 1.1.0
 servers:
   - url: /
     description: Relative path to the API server
 tags:
   - name: Employees
     description: Core CRUD operations for the Employee resource
-  - name: CSV
-    description: CSV import/export operations for Employees
+  - name: Departments
+    description: Core CRUD operations for the Department resource
+  - name: Products
+    description: Core CRUD operations for the Product resource
   - name: Reference Data
-    description: Operations for fetching reference data like departments
+    description: Operations for fetching reference data
+  - name: CSV
+    description: CSV import/export operations
 
 paths:
+  # --- Employees ---
   /employees:
     get:
-      tags:
-        - Employees
+      tags: [Employees]
       summary: Search employees
       description: Retrieves a paginated list of employees based on filter criteria.
       parameters:
@@ -56,8 +60,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
     post:
-      tags:
-        - Employees
+      tags: [Employees]
       summary: Create a new employee
       requestBody:
         required: true
@@ -87,8 +90,7 @@ paths:
 
   /employees/detail:
     get:
-      tags:
-        - Employees
+      tags: [Employees]
       summary: Get employee details
       description: Retrieves a single employee's details by their primary key.
       parameters:
@@ -114,8 +116,7 @@ paths:
 
   /employees/update:
     put:
-      tags:
-        - Employees
+      tags: [Employees]
       summary: Update an existing employee
       parameters:
         - name: employee_id
@@ -152,8 +153,7 @@ paths:
 
   /employees/delete:
     delete:
-      tags:
-        - Employees
+      tags: [Employees]
       summary: Delete an employee
       description: Deletes an employee identified by their primary key.
       parameters:
@@ -179,8 +179,7 @@ paths:
 
   /employees/download:
     post:
-      tags:
-        - CSV
+      tags: [Employees, CSV]
       summary: Download employee data as a CSV file
       requestBody:
         content:
@@ -208,9 +207,8 @@ paths:
 
   /employees/upload:
     post:
-      tags:
-        - CSV
-      summary: Upload a CSV file to bulk-create or update employees
+      tags: [Employees, CSV]
+      summary: Upload a CSV file for employees
       requestBody:
         required: true
         content:
@@ -235,12 +233,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  # --- Departments ---
   /departments:
     get:
-      tags:
-        - Reference Data
-      summary: Get a list of departments
-      description: Retrieves a list of all departments for use in dropdowns.
+      tags: [Departments]
+      summary: Search departments
+      description: Retrieves a paginated list of departments.
+      parameters:
+        - name: name
+          in: query
+          schema:
+            type: string
+          description: Filter by department name.
       responses:
         '200':
           description: A list of departments.
@@ -250,9 +254,167 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Department'
+    post:
+      tags: [Departments]
+      summary: Create a new department
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Department'
+      responses:
+        '201':
+          description: Department created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+
+  /departments/update:
+    put:
+      tags: [Departments]
+      summary: Update a department
+      parameters:
+        - name: department_id
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Department'
+      responses:
+        '200':
+          description: Department updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+
+  /departments/delete:
+    delete:
+      tags: [Departments]
+      summary: Delete a department
+      parameters:
+        - name: department_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Department deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+
+  # --- Products ---
+  /products:
+    get:
+      tags: [Products]
+      summary: Search products
+      description: Retrieves a list of products based on filter criteria.
+      parameters:
+        - name: name
+          in: query
+          schema:
+            type: string
+          description: Filter by product name.
+        - name: category_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of products.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+    post:
+      tags: [Products]
+      summary: Create a new product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201':
+          description: Product created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
+  /products/update:
+    put:
+      tags: [Products]
+      summary: Update a product
+      parameters:
+        - name: product_id
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: Product updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
+  /products/delete:
+    delete:
+      tags: [Products]
+      summary: Delete a product
+      parameters:
+        - name: product_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+
+  # --- Reference Data ---
+  /product-categories:
+    get:
+      tags: [Reference Data]
+      summary: Get a list of product categories
+      responses:
+        '200':
+          description: A list of product categories.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductCategory'
 
 components:
   schemas:
+    # --- Employee Schemas ---
     Employee:
       type: object
       description: Represents a single employee.
@@ -303,25 +465,11 @@ components:
         - name
         - department_id
         - hire_date
-
-    Department:
-      type: object
-      properties:
-        id:
-          type: string
-          description: "Unique identifier for the department."
-          example: "D01"
-        name:
-          type: string
-          description: "Name of the department."
-          example: "営業部"
-
     EmployeeResponse:
       type: object
       properties:
         item:
           $ref: '#/components/schemas/Employee'
-
     EmployeeSearchResponse:
       type: object
       properties:
@@ -336,6 +484,80 @@ components:
         pageSize:
           type: integer
 
+    # --- Department Schemas ---
+    Department:
+      type: object
+      properties:
+        department_id:
+          type: string
+          description: "Unique identifier for the department."
+          example: "D01"
+        name:
+          type: string
+          description: "Name of the department."
+          example: "営業部"
+        manager_id:
+          type: string
+          description: "Employee ID of the department manager."
+          example: "EMP001"
+        budget:
+          type: integer
+          format: int64
+          description: "Annual budget in JPY."
+          example: 50000000
+        establishment_date:
+          type: string
+          format: date
+          description: "The date the department was established."
+          example: "2010-04-01"
+
+    # --- Product Schemas ---
+    Product:
+      type: object
+      properties:
+        product_id:
+          type: string
+          description: "Unique identifier for the product."
+          example: "PROD-00123"
+        name:
+          type: string
+          description: "Name of the product."
+          example: "高性能ノートPC 14インチ"
+        description:
+          type: string
+          description: "Detailed description of the product."
+          example: "最新CPU搭載の軽量・薄型モデル。バッテリー駆動時間15時間。"
+        price:
+          type: integer
+          format: int32
+          description: "Retail price in JPY."
+          example: 230000
+        stock_quantity:
+          type: integer
+          format: int32
+          description: "Current quantity in stock."
+          example: 150
+        category_id:
+          type: string
+          description: "Category ID for the product."
+          example: "CAT-PC"
+        is_available:
+          type: boolean
+          description: "True if the product is available for sale."
+          example: true
+    ProductCategory:
+      type: object
+      properties:
+        category_id:
+          type: string
+          description: "Unique ID for the product category."
+          example: "CAT-PC"
+        name:
+          type: string
+          description: "Name of the product category."
+          example: "PC・周辺機器"
+
+    # --- Common Schemas ---
     DeleteResponse:
       type: object
       properties:
@@ -345,7 +567,6 @@ components:
         affected:
           type: integer
           example: 1
-
     ErrorResponse:
       type: object
       properties:
@@ -356,7 +577,6 @@ components:
         details:
           type: object
           additionalProperties: true
-
     CsvDownloadRequest:
       type: object
       properties:
@@ -372,7 +592,6 @@ components:
         order:
           type: string
           enum: [asc, desc]
-
     CsvUploadResponse:
       type: object
       properties:
